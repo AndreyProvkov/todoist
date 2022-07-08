@@ -26,10 +26,8 @@ export default class App extends Component {
   }
 
   addTask() {
-    this.setState({value: this.state.value.trim()});
-    
-    if (this.state.value.length) {
-      this.setState({tasks: this.state.tasks.concat(this.state.value)});
+    if (this.state.value.trim().length > 0) {
+      this.setState({tasks: this.state.tasks.concat(this.state.value.trim())});
     }
   }
 
@@ -50,11 +48,14 @@ export default class App extends Component {
 
   changeTask() {
     let arr = this.state.tasks;
-    arr[this.state.currentIndex] = this.state.value;
-    this.setState({
-      tasks: arr,
-      active: false,
-    });
+    if (this.state.value.trim().length > 0) {
+      arr[this.state.currentIndex] = this.state.value.trim();
+      this.setState({
+        tasks: arr,
+        active: false,
+      });
+    }
+    
   }
 
   handleChange(e) {
