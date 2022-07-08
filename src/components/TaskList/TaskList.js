@@ -11,7 +11,7 @@ export default class TaskList extends Component {
         } else {
             this.props.tasks.forEach((task, index) => { 
                 tasks.push(
-                    <Task task={task} key={index} edit={this.props.edit} />
+                    <Task task={task} key={index} edit={this.props.edit} handleTask={this.props.handleTask} index={index}/>
                 )
             });
         }

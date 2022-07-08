@@ -11,6 +11,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       tasks: [],
+      currentIndex: -1,
       active: false,
       edit: false
     };
@@ -18,6 +19,9 @@ export default class App extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.edit = this.edit.bind(this);
+    this.handleTask = this.handleTask.bind(this);
+    this.changeTask = this.changeTask.bind(this);
+    // this.saveTask = this.saveTask.bind(this);
   }
 
   addTask(task) {
@@ -39,6 +43,24 @@ export default class App extends Component {
   edit() {
     this.setState({edit: !this.state.edit});
   }
+
+  changeTask(item, index) {
+    let arr = this.state.tasks;
+    arr[index] = item;
+    this.setState({
+      tasks: arr,
+      active: false,
+    });
+  }
+
+  handleTask(e, index) {
+    this.setState({currentIndex: index});
+
+    if (e.target.className === 'task__text') {
+      e.preventDefault();
+      this.openModal();
+    }
+  }
   
   render() {
     return (
@@ -49,10 +71,10 @@ export default class App extends Component {
           active={this.state.active}
           tasks={this.state.tasks}
         />
-        <TaskList tasks={this.state.tasks} edit={this.state.edit} />
+        <TaskList tasks={this.state.tasks} edit={this.state.edit} handleTask={this.handleTask}/>
         {
           this.state.active && 
-          <ModalWindow addTask={this.addTask} closeModal={this.closeModal} edit={this.state.edit} active={this.state.active}/>
+          <ModalWindow addTask={this.addTask} closeModal={this.closeModal} edit={this.state.edit} active={this.state.active} change={this.changeTask} index={this.state.currentIndex} tasks={this.state.tasks}/>
         }
         <OpenModalButton openModal={this.openModal} edit={this.state.edit}/>
       </div> 

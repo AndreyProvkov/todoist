@@ -1,21 +1,9 @@
 import React, { Component } from 'react'
 
-export default class Task extends Component {
-  constructor(props) {
-    super(props);
-    this.changeTask = this.changeTask.bind(this);
-  }
-
-  changeTask(e) {
-    // if (e.target.className === 'task__text') {
-    //   e.preventDefault();
-      
-    // }
-  }
-  
+export default class Task extends Component { 
   render() {
     return (
-        <div className='task' onClick={this.props.edit ? this.changeTask : undefined}>
+        <div className='task' onClick={this.props.edit ? ((e) => this.props.handleTask(e, this.props.index)) : undefined}>
             <label className='task__block'>
                 <input className='task__checkbox' type="checkbox" />
                 <span className='task__text'>{this.props.task}</span>

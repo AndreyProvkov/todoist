@@ -7,10 +7,15 @@ export default class ModalWindow extends Component {
       value: ''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.save = this.save.bind(this);
   }
 
   handleChange(e) {
     this.setState({value: e.target.value});
+  }
+
+  save() {
+    this.props.change(this.state.value, this.props.index);
   }
   
   render() {
@@ -25,13 +30,13 @@ export default class ModalWindow extends Component {
     }
     if (isActive && isEdit) {
       btn = (
-        <button className='btn-save modal__btn-save'>Сохранить</button>
+        <button className='btn-save modal__btn-save' onClick={this.save}>Сохранить</button>
       )
     }
 
     return (
       <div className='modal'>
-        <textarea className='modal__input' value={this.state.value} onChange={this.handleChange}>Enter</textarea>
+        <textarea className='modal__input' value={this.state.value} onChange={this.handleChange}></textarea>
         <button className='btn-close modal__btn-close' onClick={this.props.closeModal}>Закрыть</button>
         {btn}
       </div>
