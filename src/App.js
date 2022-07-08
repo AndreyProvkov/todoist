@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import AddButton from './components/OpenModalButton/OpenModalButton';
+import Header from './components/Header/Header';
+import ItemList from './components/ItemList/ItemList';
+import ModalWindow from './components/ModalWindow/ModalWindow';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [
+        'doing',
+        'hello'
+      ]
+    };
+  }
+  
+  render() {
+    return (
+      <div className='wrapper'>
+        <Header />
+        <ItemList items={this.state.items}/>
+        <ModalWindow />
+        <AddButton />
+      </div>
+    );
+  }
 }
-
-export default App;
