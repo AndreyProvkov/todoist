@@ -55,7 +55,12 @@ export default class App extends Component {
         active: false,
       });
     }
-    
+  }
+
+  deleteTask(index) {
+    let arr = this.state.tasks;
+    arr.splice(index, 1);
+    this.setState({tasks: arr});
   }
 
   handleChange(e) {
@@ -65,10 +70,18 @@ export default class App extends Component {
   handleTask(e, index) {
     this.setState({currentIndex: index});
 
-    if (e.target.className === 'task__text') {
-      e.preventDefault();
-      this.setState({value: this.state.tasks[index]});
-      this.openModal();
+    switch(e.target.className.match(/(\w+)/)[1]) {
+      case 'task__text': {
+        e.preventDefault();
+        this.setState({value: this.state.tasks[index]});
+        this.openModal();
+        break;
+      }
+      case 'task__checkbox': {
+        e.preventDefault();
+        this.deleteTask(index);
+        break;
+      }
     }
   }
   
@@ -94,7 +107,10 @@ export default class App extends Component {
             value={this.state.value}
           />
         }
-        <OpenModalButton openModal={this.openModal} edit={this.state.edit}/>
+        {
+          !this.state.edit &&
+          <OpenModalButton openModal={this.openModal} edit={this.state.edit}/>
+        }
       </div> 
     );
   }

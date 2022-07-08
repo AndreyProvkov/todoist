@@ -5,7 +5,7 @@ export default class Task extends Component {
     return (
         <div className='task' onClick={this.props.edit ? ((e) => this.props.handleTask(e, this.props.index)) : undefined}>
             <label className='task__block'>
-                <input className='task__checkbox' type="checkbox" />
+                <input className={`task__checkbox ${this.props.edit && 'task__checkbox-delete'}`} type="checkbox" />
                 <span className='task__text'>{this.props.task}</span>
             </label>
         </div>
