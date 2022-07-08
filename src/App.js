@@ -25,11 +25,11 @@ export default class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  addTask(task) {
-    let normalTask = task.trim();
+  addTask() {
+    this.setState({value: this.state.value.trim()});
     
-    if (normalTask.length) {
-      this.setState({tasks: this.state.tasks.concat(normalTask)});
+    if (this.state.value.length) {
+      this.setState({tasks: this.state.tasks.concat(this.state.value)});
     }
   }
 
@@ -38,16 +38,19 @@ export default class App extends Component {
   }
 
   closeModal() {
-    this.setState({active: false});
+    this.setState({
+      active: false,
+      value: '',
+    });
   }
 
   edit() {
     this.setState({edit: !this.state.edit});
   }
 
-  changeTask(item, index) {
+  changeTask() {
     let arr = this.state.tasks;
-    arr[index] = item;
+    arr[this.state.currentIndex] = this.state.value;
     this.setState({
       tasks: arr,
       active: false,
@@ -63,6 +66,7 @@ export default class App extends Component {
 
     if (e.target.className === 'task__text') {
       e.preventDefault();
+      this.setState({value: this.state.tasks[index]});
       this.openModal();
     }
   }
