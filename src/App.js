@@ -13,7 +13,8 @@ export default class App extends Component {
       tasks: [],
       currentIndex: -1,
       active: false,
-      edit: false
+      edit: false,
+      value: '',
     };
     this.addTask = this.addTask.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -21,7 +22,7 @@ export default class App extends Component {
     this.edit = this.edit.bind(this);
     this.handleTask = this.handleTask.bind(this);
     this.changeTask = this.changeTask.bind(this);
-    // this.saveTask = this.saveTask.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   addTask(task) {
@@ -53,6 +54,10 @@ export default class App extends Component {
     });
   }
 
+  handleChange(e) {
+    this.setState({value: e.target.value});
+  }
+
   handleTask(e, index) {
     this.setState({currentIndex: index});
 
@@ -74,7 +79,15 @@ export default class App extends Component {
         <TaskList tasks={this.state.tasks} edit={this.state.edit} handleTask={this.handleTask}/>
         {
           this.state.active && 
-          <ModalWindow addTask={this.addTask} closeModal={this.closeModal} edit={this.state.edit} active={this.state.active} change={this.changeTask} index={this.state.currentIndex} tasks={this.state.tasks}/>
+          <ModalWindow 
+            addTask={this.addTask} 
+            closeModal={this.closeModal} 
+            edit={this.state.edit} 
+            active={this.state.active} 
+            save={this.changeTask}
+            handleChange={this.handleChange}
+            value={this.state.value}
+          />
         }
         <OpenModalButton openModal={this.openModal} edit={this.state.edit}/>
       </div> 
